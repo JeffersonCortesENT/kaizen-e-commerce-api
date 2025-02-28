@@ -1,0 +1,141 @@
+models:
+  Account:
+    id: id
+    name: string
+    email: string unique
+    password: string
+    role: enum:admin,staff,customer default:staff
+    status: enum:active,inactive default:active
+    timestamps: true
+
+  Brand:
+    id: id
+    name: string unique
+    timestamps: true
+
+  ProductCategory:
+    id: id
+    name: string
+    parent_id: foreign:ProductCategory nullable nullOnDelete
+    timestamps: true
+
+  Product:
+    id: id
+    name: string
+    description: text nullable
+    has_variants: boolean default:false
+    price: decimal:10,2 nullable
+    tax_type: enum:inclusive,exclusive default:exclusive
+    brand_id: foreign:Brand nullable nullOnDelete
+    category_id: foreign:ProductCategory nullable nullOnDelete
+    timestamps: true
+
+  ProductVariant:
+    id: id
+    product_id: foreign:Product cascade
+    name: string
+    sku: string unique
+    barcode: string nullable
+    price: decimal:10,2
+    status: enum:active,inactive default:active
+    timestamps: true
+
+  ProductVariantAttribute:
+    id: id
+    product_variant_id: foreign:ProductVariant cascade
+    attribute_name: string
+    attribute_value: string
+    timestamps: true
+
+  ProductInventory:
+    id: id
+    product_variant_id: foreign:ProductVariant cascade
+    stock_quantity: integer default:0
+    reserved_stock: integer default:0
+    low_stock_threshold: integer nullable
+    timestamps: true
+
+  ProductImage:
+    id: id
+    product_id: foreign:Product cascade
+    image_path: string
+    is_primary: boolean default:false
+    timestamps: true
+
+  Discount:
+    id: id
+    name: string
+    type: enum:percentage,fixed
+    value: decimal:10,2
+    start_date: timestamp nullable
+    end_date: timestamp nullable
+    timestamps: true
+
+  Order:
+    id: id
+    account_id: foreign:Account cascade
+    total_amount: decimal:10,2
+    status: enum:pending,shipped,delivered,cancelled default:pending
+    timestamps: true
+
+  OrderItem:
+    id: id
+    order_id: foreign:Order cascade
+    product_variant_id: foreign:ProductVariant cascade
+    quantity: integer
+    price: decimal:10,2
+    timestamps: true
+
+  ShippingMethod:
+    id: id
+    name: string
+    cost: decimal:10,2
+    estimated_delivery: string
+    timestamps: true
+
+  Address:
+    id: id
+    account_id: foreign:Account cascade
+    address_line_1: string
+    address_line_2: string nullable
+    city: string
+    state: string
+    postal_code: string
+    country: string
+    timestamps: true
+
+  Transaction:
+    id: id
+    order_id: foreign:Order cascade
+    payment_method: string
+    status: enum:pending,completed,failed default:pending
+    timestamps: true
+
+  Payment:
+    id: id
+    transaction_id: foreign:Transaction cascade
+    amount: decimal:10,2
+    status: enum:pending,completed,failed default:pending
+    timestamps: true
+
+  Coupon:
+    id: id
+    code: string unique
+    discount_id: foreign:Discount cascade
+    usage_limit: integer nullable
+    expires_at: timestamp nullable
+    timestamps: true
+
+  Review:
+    id: id
+    account_id: foreign:Account cascade
+    product_id: foreign:Product cascade
+    rating: integer
+    comment: text nullable
+    timestamps: true
+
+  Wishlist:
+    id: id
+    account_id: foreign:Account cascade
+    product_id: foreign:Product cascade
+    timestamps: true

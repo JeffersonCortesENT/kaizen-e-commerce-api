@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Get the current script directory (more robust method)
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+# Ensure the directory exists
+if [ ! -d "$DIR" ]; then
+    echo "Error: Directory $DIR does not exist."
+    exit 1
+fi
+
+# Build the Docker image
+docker build --build-arg uid=$(id -u) -t ci/api.kaizen-e-commerce "$DIR"

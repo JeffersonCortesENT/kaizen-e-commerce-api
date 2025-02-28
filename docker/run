@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
+
+docker run \
+	-d \
+	--name api.kaizen-e-commerce \
+	--network=shared-docker-network \
+	--restart unless-stopped \
+	-e LOCAL_DOCKER_DEV=yes \
+	-v "$DIR/php.ini":/usr/local/etc/php/php.ini \
+	-v "$DIR/api.kaizen-e-commerce.conf":/etc/apache2/sites-enabled/api.kaizen-ecommerce.conf \
+	-v "$DIR/..":/var/www/api.kaizen-e-commerce \
+	-v ~/.cache/composer:/home/docker-user/.composer/cache \
+	ci/api.kaizen-e-commerce
