@@ -1,0 +1,75 @@
+created:
+    - database/factories/AccountFactory.php
+    - database/factories/BrandFactory.php
+    - database/factories/ProductCategoryFactory.php
+    - database/factories/ProductFactory.php
+    - database/factories/ProductVariantFactory.php
+    - database/factories/ProductVariantAttributeFactory.php
+    - database/factories/ProductInventoryFactory.php
+    - database/factories/ProductImageFactory.php
+    - database/factories/DiscountFactory.php
+    - database/factories/OrderFactory.php
+    - database/factories/OrderItemFactory.php
+    - database/factories/ShippingMethodFactory.php
+    - database/factories/AddressFactory.php
+    - database/factories/TransactionFactory.php
+    - database/factories/PaymentFactory.php
+    - database/factories/CouponFactory.php
+    - database/factories/ReviewFactory.php
+    - database/factories/WishlistFactory.php
+    - database/migrations/2025_02_28_011923_create_accounts_table.php
+    - database/migrations/2025_02_28_011924_create_brands_table.php
+    - database/migrations/2025_02_28_011925_create_product_categories_table.php
+    - database/migrations/2025_02_28_011926_create_products_table.php
+    - database/migrations/2025_02_28_011927_create_product_variants_table.php
+    - database/migrations/2025_02_28_011928_create_product_variant_attributes_table.php
+    - database/migrations/2025_02_28_011929_create_product_inventories_table.php
+    - database/migrations/2025_02_28_011930_create_product_images_table.php
+    - database/migrations/2025_02_28_011931_create_discounts_table.php
+    - database/migrations/2025_02_28_011932_create_orders_table.php
+    - database/migrations/2025_02_28_011933_create_order_items_table.php
+    - database/migrations/2025_02_28_011934_create_shipping_methods_table.php
+    - database/migrations/2025_02_28_011935_create_addresses_table.php
+    - database/migrations/2025_02_28_011936_create_transactions_table.php
+    - database/migrations/2025_02_28_011937_create_payments_table.php
+    - database/migrations/2025_02_28_011938_create_coupons_table.php
+    - database/migrations/2025_02_28_011939_create_reviews_table.php
+    - database/migrations/2025_02_28_011940_create_wishlists_table.php
+    - app/Models/account.php
+    - app/Models/brand.php
+    - app/Models/product_category.php
+    - app/Models/product.php
+    - app/Models/product_variant.php
+    - app/Models/product_variant_attribute.php
+    - app/Models/product_inventory.php
+    - app/Models/product_image.php
+    - app/Models/discount.php
+    - app/Models/order.php
+    - app/Models/order_item.php
+    - app/Models/shipping_method.php
+    - app/Models/address.php
+    - app/Models/transaction.php
+    - app/Models/payment.php
+    - app/Models/coupon.php
+    - app/Models/review.php
+    - app/Models/wishlist.php
+models:
+    account: { id: id, name: string, email: 'string unique', password: string, role: 'enum:admin,staff,customer default:staff', status: 'enum:active,inactive default:active', timestamps: timestamps }
+    brand: { id: id, name: 'string unique', timestamps: timestamps }
+    product_category: { id: id, name: string, parent_id: 'foreign:product_category nullable nullOnDelete', timestamps: timestamps }
+    product: { id: id, name: string, description: 'text nullable', has_variants: 'boolean default:false', price: 'decimal:10,2 nullable', tax_type: 'enum:inclusive,exclusive default:exclusive', brand_id: 'foreign:brand nullable nullOnDelete', category_id: 'foreign:product_category nullable nullOnDelete', timestamps: timestamps }
+    product_variant: { id: id, product_id: 'foreign:product cascade', name: string, sku: 'string unique', barcode: 'string nullable', price: 'decimal:10,2', status: 'enum:active,inactive default:active', timestamps: timestamps }
+    product_variant_attribute: { id: id, product_variant_id: 'foreign:product_variant cascade', attribute_name: string, attribute_value: string, timestamps: timestamps }
+    product_inventory: { id: id, product_variant_id: 'foreign:product_variant cascade', stock_quantity: 'integer default:0', reserved_stock: 'integer default:0', low_stock_threshold: 'integer nullable', timestamps: timestamps }
+    product_image: { id: id, product_id: 'foreign:product cascade', image_path: string, is_primary: 'boolean default:false', timestamps: timestamps }
+    discount: { id: id, name: string, type: 'enum:percentage,fixed', value: 'decimal:10,2', start_date: 'timestamp nullable', end_date: 'timestamp nullable', timestamps: timestamps }
+    order: { id: id, account_id: 'foreign:account cascade', total_amount: 'decimal:10,2', status: 'enum:pending,shipped,delivered,cancelled default:pending', timestamps: timestamps }
+    order_item: { id: id, order_id: 'foreign:order cascade', product_variant_id: 'foreign:product_variant cascade', quantity: integer, price: 'decimal:10,2', timestamps: timestamps }
+    shipping_method: { id: id, name: string, cost: 'decimal:10,2', estimated_delivery: string, timestamps: timestamps }
+    address: { id: id, account_id: 'foreign:account cascade', address_line_1: string, address_line_2: 'string nullable', city: string, state: string, postal_code: string, country: string, timestamps: timestamps }
+    transaction: { id: id, order_id: 'foreign:order cascade', payment_method: string, status: 'enum:pending,completed,failed default:pending', timestamps: timestamps }
+    payment: { id: id, transaction_id: 'foreign:transaction cascade', amount: 'decimal:10,2', status: 'enum:pending,completed,failed default:pending', timestamps: timestamps }
+    coupons: { id: id, code: 'string unique', discount_id: 'foreign:discounts cascade', usage_limit: 'integer nullable', expires_at: 'timestamp nullable', timestamps: timestamps }
+    review: { id: id, account_id: 'foreign:account cascade', product_id: 'foreign:product cascade', rating: integer, comment: 'text nullable', timestamps: timestamps }
+    wishlist: { id: id, account_id: 'foreign:account cascade', product_id: 'foreign:product cascade', timestamps: timestamps }
+    coupon: { id: id, code: 'string unique', discount_id: 'foreign:discount cascade', usage_limit: 'integer nullable', expires_at: 'timestamp nullable', timestamps: timestamps }

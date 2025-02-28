@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+[ -d "$DIR/../var" ] || mkdir -p "$DIR/../var"
+docker exec api.kaizen-e-commerce setfacl -R -m u:www-data:rwX -m u:docker-user:rwX /var/www/api.kaizen-e-commerce/var
+docker exec api.kaizen-e-commerce setfacl -dR -m u:www-data:rwx -m u:docker-user:rwx /var/www/api.kaizen-e-commerce/var
+
+[ -d "$DIR/../uploads" ] || mkdir -p "$DIR/../uploads"
+docker exec api.kaizen-e-commerce setfacl -R -m u:www-data:rwX -m u:docker-user:rwX /var/www/api.kaizen-e-commerce/uploads
+docker exec api.kaizen-e-commerce setfacl -dR -m u:www-data:rwx -m u:docker-user:rwx /var/www/api.kaizen-e-commerce/uploads
+
+[ -d "$DIR/../thumbnails" ] || mkdir -p "$DIR/../thumbnails"
+docker exec api.kaizen-e-commerce setfacl -R -m u:www-data:rwX -m u:docker-user:rwX /var/www/api.kaizen-e-commerce/thumbnails
+docker exec api.kaizen-e-commerce setfacl -dR -m u:www-data:rwx -m u:docker-user:rwx /var/www/api.kaizen-e-commerce/thumbnails
+
+[ -d "$DIR/../exports" ] || mkdir -p "$DIR/../exports"
+docker exec api.kaizen-e-commerce setfacl -R -m u:www-data:rwX -m u:docker-user:rwX /var/www/api.kaizen-e-commerce/exports
+docker exec api.kaizen-e-commerce setfacl -dR -m u:www-data:rwx -m u:docker-user:rwx /var/www/api.kaizen-e-commerce/exports
