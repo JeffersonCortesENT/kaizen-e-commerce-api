@@ -1,11 +1,12 @@
 models:
   Account:
+    model: Authenticatable
     id: id
     name: string
     email: string unique
     password: string
     role: enum:admin,staff,customer default:staff
-    status: enum:active,inactive default:active
+    enabled: boolean default:true
     timestamps: true
 
   Brand:

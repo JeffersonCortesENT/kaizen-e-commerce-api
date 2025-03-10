@@ -3,9 +3,10 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 use App\Models\Account;
 use App\Models\Product;
-use App\Models\review;
+use App\Models\Review;
 
 class ReviewFactory extends Factory
 {

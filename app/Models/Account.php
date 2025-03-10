@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Account extends Model
+class Account extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +20,7 @@ class Account extends Model
         'email',
         'password',
         'role',
-        'status',
+        'enabled',
     ];
 
     /**
@@ -38,5 +39,6 @@ class Account extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'enabled' => 'boolean',
     ];
 }

@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\shipping_method;
 use App\Models\ShippingMethod;
 
 class ShippingMethodFactory extends Factory

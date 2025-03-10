@@ -5,8 +5,8 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Order;
-use App\Models\ProductVariant;
 use App\Models\OrderItem;
+use App\Models\ProductVariant;
 
 class OrderItemFactory extends Factory
 {

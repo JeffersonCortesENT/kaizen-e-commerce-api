@@ -4,8 +4,8 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Models\Payment;
 use App\Models\Transaction;
-use App\Models\payment;
 
 class PaymentFactory extends Factory
 {

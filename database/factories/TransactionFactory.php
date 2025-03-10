@@ -3,8 +3,9 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 use App\Models\Order;
-use App\Models\transaction;
+use App\Models\Transaction;
 
 class TransactionFactory extends Factory
 {

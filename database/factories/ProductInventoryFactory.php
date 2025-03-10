@@ -3,8 +3,9 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\ProductVariant;
+use Illuminate\Support\Str;
 use App\Models\ProductInventory;
+use App\Models\ProductVariant;
 
 class ProductInventoryFactory extends Factory
 {

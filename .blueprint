@@ -17,42 +17,42 @@ created:
     - database/factories/CouponFactory.php
     - database/factories/ReviewFactory.php
     - database/factories/WishlistFactory.php
-    - database/migrations/2025_02_28_011923_create_accounts_table.php
-    - database/migrations/2025_02_28_011924_create_brands_table.php
-    - database/migrations/2025_02_28_011925_create_product_categories_table.php
-    - database/migrations/2025_02_28_011926_create_products_table.php
-    - database/migrations/2025_02_28_011927_create_product_variants_table.php
-    - database/migrations/2025_02_28_011928_create_product_variant_attributes_table.php
-    - database/migrations/2025_02_28_011929_create_product_inventories_table.php
-    - database/migrations/2025_02_28_011930_create_product_images_table.php
-    - database/migrations/2025_02_28_011931_create_discounts_table.php
-    - database/migrations/2025_02_28_011932_create_orders_table.php
-    - database/migrations/2025_02_28_011933_create_order_items_table.php
-    - database/migrations/2025_02_28_011934_create_shipping_methods_table.php
-    - database/migrations/2025_02_28_011935_create_addresses_table.php
-    - database/migrations/2025_02_28_011936_create_transactions_table.php
-    - database/migrations/2025_02_28_011937_create_payments_table.php
-    - database/migrations/2025_02_28_011938_create_coupons_table.php
-    - database/migrations/2025_02_28_011939_create_reviews_table.php
-    - database/migrations/2025_02_28_011940_create_wishlists_table.php
-    - app/Models/account.php
-    - app/Models/brand.php
-    - app/Models/product_category.php
-    - app/Models/product.php
-    - app/Models/product_variant.php
-    - app/Models/product_variant_attribute.php
-    - app/Models/product_inventory.php
-    - app/Models/product_image.php
-    - app/Models/discount.php
-    - app/Models/order.php
-    - app/Models/order_item.php
-    - app/Models/shipping_method.php
-    - app/Models/address.php
-    - app/Models/transaction.php
-    - app/Models/payment.php
-    - app/Models/coupon.php
-    - app/Models/review.php
-    - app/Models/wishlist.php
+    - database/migrations/2025_03_04_052710_create_accounts_table.php
+    - database/migrations/2025_03_04_052711_create_brands_table.php
+    - database/migrations/2025_03_04_052712_create_product_categories_table.php
+    - database/migrations/2025_03_04_052713_create_products_table.php
+    - database/migrations/2025_03_04_052714_create_product_variants_table.php
+    - database/migrations/2025_03_04_052715_create_product_variant_attributes_table.php
+    - database/migrations/2025_03_04_052716_create_product_inventories_table.php
+    - database/migrations/2025_03_04_052717_create_product_images_table.php
+    - database/migrations/2025_03_04_052718_create_discounts_table.php
+    - database/migrations/2025_03_04_052719_create_orders_table.php
+    - database/migrations/2025_03_04_052720_create_order_items_table.php
+    - database/migrations/2025_03_04_052721_create_shipping_methods_table.php
+    - database/migrations/2025_03_04_052722_create_addresses_table.php
+    - database/migrations/2025_03_04_052723_create_transactions_table.php
+    - database/migrations/2025_03_04_052724_create_payments_table.php
+    - database/migrations/2025_03_04_052725_create_coupons_table.php
+    - database/migrations/2025_03_04_052726_create_reviews_table.php
+    - database/migrations/2025_03_04_052727_create_wishlists_table.php
+    - app/Models/Account.php
+    - app/Models/Brand.php
+    - app/Models/ProductCategory.php
+    - app/Models/Product.php
+    - app/Models/ProductVariant.php
+    - app/Models/ProductVariantAttribute.php
+    - app/Models/ProductInventory.php
+    - app/Models/ProductImage.php
+    - app/Models/Discount.php
+    - app/Models/Order.php
+    - app/Models/OrderItem.php
+    - app/Models/ShippingMethod.php
+    - app/Models/Address.php
+    - app/Models/Transaction.php
+    - app/Models/Payment.php
+    - app/Models/Coupon.php
+    - app/Models/Review.php
+    - app/Models/Wishlist.php
 models:
     account: { id: id, name: string, email: 'string unique', password: string, role: 'enum:admin,staff,customer default:staff', status: 'enum:active,inactive default:active', timestamps: timestamps }
     brand: { id: id, name: 'string unique', timestamps: timestamps }
@@ -73,3 +73,21 @@ models:
     review: { id: id, account_id: 'foreign:account cascade', product_id: 'foreign:product cascade', rating: integer, comment: 'text nullable', timestamps: timestamps }
     wishlist: { id: id, account_id: 'foreign:account cascade', product_id: 'foreign:product cascade', timestamps: timestamps }
     coupon: { id: id, code: 'string unique', discount_id: 'foreign:discount cascade', usage_limit: 'integer nullable', expires_at: 'timestamp nullable', timestamps: timestamps }
+    Account: { id: id, name: string, email: 'string unique', password: string, role: 'enum:admin,staff,customer default:staff', enabled: 'boolean default:true', timestamps: timestamps }
+    Brand: { id: id, name: 'string unique', timestamps: timestamps }
+    ProductCategory: { id: id, name: string, parent_id: 'foreign:ProductCategory nullable nullOnDelete', timestamps: timestamps }
+    Product: { id: id, name: string, description: 'text nullable', has_variants: 'boolean default:false', price: 'decimal:10,2 nullable', tax_type: 'enum:inclusive,exclusive default:exclusive', brand_id: 'foreign:Brand nullable nullOnDelete', category_id: 'foreign:ProductCategory nullable nullOnDelete', timestamps: timestamps }
+    ProductVariant: { id: id, product_id: 'foreign:Product cascade', name: string, sku: 'string unique', barcode: 'string nullable', price: 'decimal:10,2', status: 'enum:active,inactive default:active', timestamps: timestamps }
+    ProductVariantAttribute: { id: id, product_variant_id: 'foreign:ProductVariant cascade', attribute_name: string, attribute_value: string, timestamps: timestamps }
+    ProductInventory: { id: id, product_variant_id: 'foreign:ProductVariant cascade', stock_quantity: 'integer default:0', reserved_stock: 'integer default:0', low_stock_threshold: 'integer nullable', timestamps: timestamps }
+    ProductImage: { id: id, product_id: 'foreign:Product cascade', image_path: string, is_primary: 'boolean default:false', timestamps: timestamps }
+    Discount: { id: id, name: string, type: 'enum:percentage,fixed', value: 'decimal:10,2', start_date: 'timestamp nullable', end_date: 'timestamp nullable', timestamps: timestamps }
+    Order: { id: id, account_id: 'foreign:Account cascade', total_amount: 'decimal:10,2', status: 'enum:pending,shipped,delivered,cancelled default:pending', timestamps: timestamps }
+    OrderItem: { id: id, order_id: 'foreign:Order cascade', product_variant_id: 'foreign:ProductVariant cascade', quantity: integer, price: 'decimal:10,2', timestamps: timestamps }
+    ShippingMethod: { id: id, name: string, cost: 'decimal:10,2', estimated_delivery: string, timestamps: timestamps }
+    Address: { id: id, account_id: 'foreign:Account cascade', address_line_1: string, address_line_2: 'string nullable', city: string, state: string, postal_code: string, country: string, timestamps: timestamps }
+    Transaction: { id: id, order_id: 'foreign:Order cascade', payment_method: string, status: 'enum:pending,completed,failed default:pending', timestamps: timestamps }
+    Payment: { id: id, transaction_id: 'foreign:Transaction cascade', amount: 'decimal:10,2', status: 'enum:pending,completed,failed default:pending', timestamps: timestamps }
+    Coupon: { id: id, code: 'string unique', discount_id: 'foreign:Discount cascade', usage_limit: 'integer nullable', expires_at: 'timestamp nullable', timestamps: timestamps }
+    Review: { id: id, account_id: 'foreign:Account cascade', product_id: 'foreign:Product cascade', rating: integer, comment: 'text nullable', timestamps: timestamps }
+    Wishlist: { id: id, account_id: 'foreign:Account cascade', product_id: 'foreign:Product cascade', timestamps: timestamps }

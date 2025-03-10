@@ -5,8 +5,8 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Brand;
+use App\Models\Product;
 use App\Models\ProductCategory;
-use App\Models\product;
 
 class ProductFactory extends Factory
 {

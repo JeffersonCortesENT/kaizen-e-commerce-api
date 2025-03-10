@@ -3,7 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\account;
+use Illuminate\Support\Str;
+use App\Models\Account;
 
 class AccountFactory extends Factory
 {
@@ -24,7 +25,7 @@ class AccountFactory extends Factory
             'email' => fake()->safeEmail(),
             'password' => fake()->password(),
             'role' => fake()->randomElement(["admin","staff","customer"]),
-            'status' => fake()->randomElement(["active","inactive"]),
+            'enabled' => fake()->boolean(),
         ];
     }
 }
